@@ -25,8 +25,9 @@ import java.util.UUID;
 @ContextConfiguration(classes = {Application.class})
 public class TestOpenTaskEvent {
 
-    private static final String TEAMMATE_ID = "teammateId";
-    private static final String TASK_ID     = "taskId";
+    private static final String ASSIGNEE_ID     = "assigneeId";
+    private static final String TASK_ID         = "taskId";
+    private static final String EVENT_NAME      = "eventName";
 
     @Autowired
     private Sink sink;
@@ -42,12 +43,13 @@ public class TestOpenTaskEvent {
 
         Map<String, Object> event = new HashMap<>();
 
-        event.put(TEAMMATE_ID, teammateDTO.getId());
+        event.put(ASSIGNEE_ID, teammateDTO.getId());
         event.put(TASK_ID, taskId);
 
         sink.input()
                 .send(MessageBuilder
                         .withPayload(event)
+                        .setHeader(EVENT_NAME, "ru.agiletech.task.service.domain.task.TeammateAssigned")
                         .build());
     }
 

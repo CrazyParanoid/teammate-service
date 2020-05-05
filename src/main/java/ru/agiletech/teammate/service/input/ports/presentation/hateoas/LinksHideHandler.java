@@ -3,12 +3,14 @@ package ru.agiletech.teammate.service.input.ports.presentation.hateoas;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.stereotype.Component;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.schema.ModelPropertyBuilderPlugin;
 import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 
 import java.lang.reflect.Field;
 
+@Component
 public class LinksHideHandler implements ModelPropertyBuilderPlugin {
 
     @Override

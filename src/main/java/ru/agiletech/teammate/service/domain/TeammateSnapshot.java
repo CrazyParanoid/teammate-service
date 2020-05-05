@@ -3,6 +3,7 @@ package ru.agiletech.teammate.service.domain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
+import ru.agiletech.teammate.service.domain.supertype.ValueObject;
 import ru.agiletech.teammate.service.domain.task.TaskId;
 
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
 import static ru.agiletech.teammate.service.domain.Teammate.*;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class TeammateSnapshot {
+public class TeammateSnapshot implements ValueObject {
 
     private final UserRole      userRole;
     private final Contacts      contacts;

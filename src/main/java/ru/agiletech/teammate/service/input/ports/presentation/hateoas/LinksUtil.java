@@ -12,6 +12,9 @@ public class LinksUtil {
         addSelfLink(teammateDTO);
         addAllTeammatesLink(teammateDTO);
         addRoleLink(teammateDTO);
+        addContactsLink(teammateDTO);
+        addCredentialsLink(teammateDTO);
+        addFullNameLink(teammateDTO);
     }
 
     private void addSelfLink(TeammateDTO teammateDTO){
@@ -30,6 +33,24 @@ public class LinksUtil {
         teammateDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TeammateResource.class)
                 .changeRole(teammateDTO.getId(),null))
                 .withRel("role"));
+    }
+
+    private void addFullNameLink(TeammateDTO teammateDTO){
+        teammateDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TeammateResource.class)
+                .changeFullName(teammateDTO.getId(),null, null, null))
+                .withRel("fullName"));
+    }
+
+    private void addCredentialsLink(TeammateDTO teammateDTO){
+        teammateDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TeammateResource.class)
+                .changePassword(teammateDTO.getId(),null))
+                .withRel("credentials"));
+    }
+
+    private void addContactsLink(TeammateDTO teammateDTO){
+        teammateDTO.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TeammateResource.class)
+                .changeContacts(teammateDTO.getId(),null, null))
+                .withRel("contacts"));
     }
 
 }

@@ -12,17 +12,18 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class TaskCreatedEventFilter implements PipeFilter<Map<String, Object>> {
+public class TeammateAssignedEventSubscriber implements EventSubscriber<Map<String, Object>> {
 
-    private static final String TEAMMATE_ID = "teammateId";
-    private static final String TASK_ID     = "taskId";
+    private static final String TASK_ID         = "taskId";
+    private static final String ASSIGNEE_ID     = "assigneeId";
 
     private final CommandProcessor<OpenTaskForTeammateCommand> openTaskForTeammateCommandProcessor;
 
     @Override
-    @StreamListener(Sink.INPUT)
+    @StreamListener(value = Sink.INPUT,
+            condition = "headers['eventName'] == 'ru.agiletech.task.service.domain.task.TeammateAssigned'")
     public void onEvent(@Valid Map<String, Object> serializedEvent) {
-        String teammateId = (String) serializedEvent.get(TEAMMATE_ID);
+        String teammateId = (String) serializedEvent.get(ASSIGNEE_ID);
         String taskId = (String) serializedEvent.get(TASK_ID);
 
         var command = new OpenTaskForTeammateCommand(taskId,

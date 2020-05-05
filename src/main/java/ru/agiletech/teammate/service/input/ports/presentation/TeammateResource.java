@@ -1,5 +1,7 @@
 package ru.agiletech.teammate.service.input.ports.presentation;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.http.HttpStatus;
@@ -19,12 +21,14 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(value = "REST-ресурс модели участника agile команды")
 public class TeammateResource {
 
     private final TeammateService teammateService;
 
     @PostMapping(value = "/teammates")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Создать участника", code = 201)
     public TeammateDTO createTeammate(@Valid @RequestBody TeammateDTO teammateDTO){
         var createdTeammate = teammateService.createTeammate(teammateDTO);
         LinksUtil.addLinks(createdTeammate);
@@ -34,6 +38,7 @@ public class TeammateResource {
 
     @GetMapping(value = "/teammates/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Найти участника по идентификатору")
     public TeammateDTO getTeammate(@PathVariable String id){
         var teammate = teammateService.searchTeammate(id);
         LinksUtil.addLinks(teammate);
@@ -43,6 +48,7 @@ public class TeammateResource {
 
     @GetMapping(value = "/teammates")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Найти всех участников")
     public Set<TeammateDTO> getAllTeammates(){
         Set<TeammateDTO> teammates = teammateService.searchAllTeammates();
 
@@ -53,10 +59,11 @@ public class TeammateResource {
     }
 
     @PutMapping(value = "/teammates/{id}/fullName")
-    public ResponseEntity<Void> changeName(@PathVariable(name = "id")       String teammateId,
-                                           @RequestParam                    String name,
-                                           @RequestParam                    String surName,
-                                           @RequestParam(required = false)  String patronymic){
+    @ApiOperation(value = "Обновить ФИО участника")
+    public ResponseEntity<Void> changeFullName(@PathVariable(name = "id")       String teammateId,
+                                               @RequestParam                    String name,
+                                               @RequestParam                    String surName,
+                                               @RequestParam(required = false)  String patronymic){
         ChangeFullNameCommand command = new ChangeFullNameCommand(teammateId,
                 name,
                 surName,
@@ -68,6 +75,7 @@ public class TeammateResource {
     }
 
     @PutMapping(value = "/teammates/{id}/credentials")
+    @ApiOperation(value = "Обновить полномочия участника")
     public ResponseEntity<Void> changePassword(@PathVariable(name = "id") String teammateId,
                                                @RequestParam              String password){
         ChangePasswordCommand command = new ChangePasswordCommand(teammateId,
@@ -79,9 +87,10 @@ public class TeammateResource {
     }
 
     @PutMapping(value = "/teammates/{id}/contacts")
-    public ResponseEntity<Void> changeEmail(@PathVariable(name = "id")          String teammateId,
-                                            @RequestParam(required = false)     String email,
-                                            @RequestParam(required = false)     String phoneNumber){
+    @ApiOperation(value = "Обновить контакты участника")
+    public ResponseEntity<Void> changeContacts(@PathVariable(name = "id")          String teammateId,
+                                               @RequestParam(required = false)     String email,
+                                               @RequestParam(required = false)     String phoneNumber){
         ChangeContactsCommand command = new ChangeContactsCommand(teammateId,
                 email,
                 phoneNumber);
@@ -92,6 +101,7 @@ public class TeammateResource {
     }
 
     @PutMapping(value = "/teammates/{id}/role")
+    @ApiOperation(value = "Обновить роль участника")
     public ResponseEntity<Void> changeRole(@PathVariable(name = "id") String teammateId,
                                            @RequestParam              String role){
         ChangeRoleCommand command = new ChangeRoleCommand(teammateId,
