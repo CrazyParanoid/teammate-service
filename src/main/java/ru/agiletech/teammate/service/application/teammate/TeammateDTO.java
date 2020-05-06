@@ -45,13 +45,15 @@ public class TeammateDTO extends RepresentationModel<TeammateDTO> {
     @ApiModelProperty(position = 6, required = true, value = "Почта")
     private String      email;
 
+    @NotEmpty
     @ApiModelProperty(position = 7, value = "Номер телефона")
     private String      phoneNumber;
 
     @ApiModelProperty(position = 8, value = "Дата создания")
     private LocalDate createDate;
 
-    @ApiModelProperty(position = 9, value = "Роль")
+    @NotEmpty
+    @ApiModelProperty(position = 9, required = true, value = "Роль")
     private String      role;
 
     @ApiModelProperty(position = 10, value = "Открытые задачи")
